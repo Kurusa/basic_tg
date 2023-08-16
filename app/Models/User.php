@@ -21,4 +21,9 @@ class User extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function feedbacks(): HasMany
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }

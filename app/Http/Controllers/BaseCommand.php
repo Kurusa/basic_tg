@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewUserCreatedEvent;
 use App\Models\Message;
 use App\Models\User;
 use App\Utils\Api;
@@ -31,11 +32,22 @@ abstract class BaseCommand
 
     protected function saveMessage(): void
     {
+        if ($this->user->chat_id == config('telegram')['admin_chat_id']) {
+            return;
+        }
+
         if ($this->update->getMessage()) {
-            $this->user->messages()->save(new Message([
-                'user_id' => $this->user->id,
-                'text'    => $this->update->getMessage()->getText()
-            ]));
+            $payload = [
+                'text' => $this->update->getMessage()->getText(),
+            ];
+        } elseif ($this->update->getCallbackQuery()) {
+            $payload = [
+                'text' => json_encode($this->update->getDecodedCallbackQueryData()),
+            ];
+        }
+
+        if (isset($payload)) {
+            $this->user->messages()->save(new Message($payload));
         }
     }
 
@@ -47,7 +59,10 @@ abstract class BaseCommand
                 'user_name'  => $this->update->getBotUser()->getUsername(),
                 'first_name' => $this->update->getBotUser()->getFirstName(),
                 'last_name'  => $this->update->getBotUser()->getLastName(),
+                'status'     => 'new',
             ]);
+
+            NewUserCreatedEvent::dispatch($this->user);
         });
     }
 
@@ -56,8 +71,7 @@ abstract class BaseCommand
         if ($this->update->getCallbackQuery()) {
             try {
                 $this->getBot()->answerCallbackQuery($this->update->getCallbackQuery()->getId());
-            } catch (\TelegramBot\Api\Exception $e) {
-            }
+            } catch (\TelegramBot\Api\Exception $e) {}
         }
     }
 

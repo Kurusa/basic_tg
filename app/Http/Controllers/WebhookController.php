@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Utils\Api;
 use App\Utils\FindCommandHandler;
 use App\Utils\Handlers\InlineQueryCommandHandler;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Exception;
@@ -27,7 +28,7 @@ class WebhookController
 
         $client->on(function (Update $update) {
             $bot = new Api(config('telegram.telegram_bot_token'));
-            $handler = new InlineQueryCommandHandler($update->getInlineQuery());
+            $handler = new InlineQueryCommandHandler(new \App\Utils\Update($update));
             try {
                 $bot->answerInlineQuery(
                     $update->getInlineQuery()->getId(),

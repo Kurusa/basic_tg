@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\AskToRateRecipeEvent;
-use App\Events\CookingDoneEvent;
-use App\Listeners\AskToRateRecipeListener;
-use App\Listeners\CookingDoneListener;
+use App\Events\NewUserCreatedEvent;
+use App\Listeners\NewUserCreatedListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,11 +14,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        CookingDoneEvent::class => [
-            CookingDoneListener::class,
-        ],
-        AskToRateRecipeEvent::class => [
-            AskToRateRecipeListener::class,
+        NewUserCreatedEvent::class => [
+            NewUserCreatedListener::class,
         ],
     ];
 

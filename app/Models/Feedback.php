@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Message extends Model
+class Feedback extends Model
 {
-    protected $table = 'messages';
+    protected $table = 'feedbacks';
 
     protected $fillable = [
-        'text',
         'user_id',
-        'category_id',
+        'message',
     ];
 
     public function user(): BelongsTo

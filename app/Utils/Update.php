@@ -18,6 +18,14 @@ class Update extends \TelegramBot\Api\Types\Update
         if ($update->getMessage()) {
             parent::setMessage($update->getMessage());
         }
+
+        if ($update->getInlineQuery()) {
+            parent::setInlineQuery($update->getInlineQuery());
+        }
+
+        if ($update->getChosenInlineResult()) {
+            parent::setChosenInlineResult($update->getChosenInlineResult());
+        }
     }
 
     public function getBotUser(): User
@@ -35,7 +43,7 @@ class Update extends \TelegramBot\Api\Types\Update
         return $user;
     }
 
-    private function getDecodedCallbackQueryData(): array
+    public function getDecodedCallbackQueryData(): array
     {
         if ($this->getCallbackQuery() && !$this->decodedCallbackQueryData) {
             $this->decodedCallbackQueryData = json_decode($this->getCallbackQuery()->getData(), true);
