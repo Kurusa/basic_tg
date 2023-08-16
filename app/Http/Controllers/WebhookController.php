@@ -33,8 +33,6 @@ class WebhookController
                     $update->getInlineQuery()->getId(),
                     $handler->handle(),
                     0,
-                    false,
-                    $handler->offset + 50
                 );
             } catch (Exception $e) {
                 Log::info($e->getMessage());
