@@ -6,7 +6,7 @@ use App\Utils\Update;
 
 class InlineQueryCommandHandler
 {
-    private int $offset;
+    public int $offset;
     private string $query;
     private Update $update;
 

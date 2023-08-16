@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Utils\Api;
 use App\Utils\FindCommandHandler;
 use App\Utils\Handlers\InlineQueryCommandHandler;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Exception;
