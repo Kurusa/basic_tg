@@ -15,6 +15,7 @@ class User extends Model
         'last_name',
         'chat_id',
         'status',
+        'is_blocked',
     ];
 
     public function messages(): HasMany
