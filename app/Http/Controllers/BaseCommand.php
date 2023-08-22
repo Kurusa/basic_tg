@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewUserCreatedEvent;
 use App\Models\Message;
 use App\Models\User;
 use App\Utils\Api;
@@ -62,7 +61,7 @@ abstract class BaseCommand
                 'status'     => 'new',
             ]);
 
-            NewUserCreatedEvent::dispatch($this->user);
+            $this->bot->sendMessage(config('telegram.admin_chat_id'), $this->user->user_name . ' new user.');
         });
     }
 

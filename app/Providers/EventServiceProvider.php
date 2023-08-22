@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\NewUserCreatedEvent;
-use App\Listeners\NewUserCreatedListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -14,9 +12,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        NewUserCreatedEvent::class => [
-            NewUserCreatedListener::class,
-        ],
     ];
 
     /**
