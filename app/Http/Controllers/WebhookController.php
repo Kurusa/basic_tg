@@ -46,7 +46,7 @@ class WebhookController
         $client->run();
     }
 
-    private function determineHandler(Update $update): ?string
+    private function determineHandler(\App\Utils\Update $update): ?string
     {
         $handlerClassName = null;
         if ($update->getCallbackQuery()) {
@@ -55,7 +55,7 @@ class WebhookController
             if (isset(config('telegram.handlers.callback')[$action])) {
                 $handlerClassName = config('telegram.handlers.callback')[$action];
             }
-        } elseif ($update->getMessage()->getText()) {
+        } elseif ($update->getMessageText()) {
             $handler = new FindCommandHandler($update);
             $handlerClassName = $handler->findCommandHandler();
         }
